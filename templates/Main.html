@@ -1,0 +1,80 @@
+{% extends "index.html" %}
+{% block content %}
+
+<body style="background-color: #383e56">
+    <div class="container-fluid">
+        <h1 class="display-1 jumbotron" style="text-align: center; background-color: #ea907a"><span style="color: #eedad1">Debate</span></h1>
+    </div>
+    <div class="container" style="color: #ea907a">
+
+        <div class="mb-3">
+            <form action="/search"  method="POST">
+            <input type="text" required class="form-control" name="search" placeholder="enter topicto search">
+            <button type="submit" class=" btn btn-secondary">search</button>
+        </form>
+          </div>
+
+
+
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-primary alert-dismissible fade show" role="alert">
+            <span>{{ message }}</span>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+      
+              
+              <a href="/claimblogview" class="w-100  mb-5 btn btn-info">Click to post a claim and select other claims you feel relates to your claim!</a>
+
+          
+          
+
+        <form action="{{ url_for('topicinsert') }}">
+            <button type="submit" class="btn btn-sm" style="background-color: #596e79"><span style="color: white">+ ADD A NEW TOPIC</span></button>
+        </form>
+     
+        <div class="list-group" style="background-color: #ea907a;margin-top:10px; border-radius: 4px;">
+            <h2 style="text-align: center; color: #eedad1">All Topics</h2>
+         
+
+            {% for topic_name in topiclist%}
+
+            <form  method="POST" action="{{ url_for('topic') }}">
+                <li class="list-group">
+
+                    <button type="submit" name="topicid" id="topicid" value="{{ topic_name[2] }}" href="#"
+                        class="list-group-item list-group-item-action" style="color: #596e79"><strong>{{ topic_name[0] }}</strong>
+                        <p style="color: #596e79"><small> {{ topic_name[1] }}</small></p>
+
+                        <a href="/topic/delete/{{topic_name[2]}}">delete</a>
+                    </button>
+                </li>
+            </form>
+
+            {% endfor %}
+        </div>
+
+
+</div>
+
+
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</body>
+{% endblock %}

@@ -1,0 +1,128 @@
+{% extends "index.html" %}
+{% block content %}
+
+    <body style="background-color: #383e56">
+    <div class="container-fluid">
+        <h1 class="display-1 jumbotron" style="text-align: center; background-color: #ea907a"><span
+                style="color: #eedad1">Claim Title</span></h1>
+    </div>
+    <div class="container">
+
+        <div>
+
+            <form action="{{ url_for('topic') }}" method="POST">
+
+                <input type="hidden" value="{{ claimdata[1] }}" name="topicid">
+                <h2 style="color: #eedad1">Related To: <span>
+                        <button class="btn btn-danger btn-lg" type="submit">{{ topictitle }}</button>
+                    </span></h2>
+
+            </form>
+
+
+            </span>
+
+            <!--   Topic CONTENT     -->
+            <div class="jumbotron" style="background-color: #ea907a">
+
+                <h1 style="color: #eedad1">{{ claimdata[4] }} <span
+                        style="font-size: 12px;"> ◽ Posted by User: {{ claimdata[2] }} | Time:
+                    {{ claimdata[3] }}</span>
+                </h1>
+
+                <p class="lead" style="color: #eedad1; font-size: 30px;">{{ claimdata[5] }}</p>
+                <hr class="my-4">
+
+
+                <div>
+                    <h4 style="color: #eedad1">Replies:
+                        <span><button style=" float: right; margin-left: -40%; background-color: #596e79;" type="button"
+                                      class="btn btn-sm" data-toggle="modal" data-target="#reply"><span
+                                style="color: white"> Reply</span>
+                            </button>
+
+                        </span>
+                    </h4>
+
+                    {% for reply in claimreply %}
+                        <div class="list-group-item list-group-item-dark">
+                            <h6>{{ reply[2] }} <span style="font-size: 12px;">at {{ reply[4] }}
+                            <span class="badge badge-secondary">{{ reply[5] }}</span>   
+                        </span></h6>
+
+                            <p style="font-size: 14px;">{{ reply[3] }}</p>
+                        </div>
+                    {% endfor %}
+
+                </div>
+            </div>
+        </div>
+        <br>
+        <div>
+            <!--    COMMENTS    -->
+        </div>
+        <br>
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" tabindex="-1" id="reply" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Reply</h5>
+                    <button type="button" class="close btn-success"
+                    " data-dismiss=" modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form method="POST" action="{{ url_for('claimreply') }}">
+                    <div class="modal-body">
+
+                        <input type="text" class="form-control" name="reply" placeholder="Enter your reply">
+                    </div>
+                    <input type="hidden" value="{{ claimdata[0] }}" name="claimid">
+                    <input type="hidden" value="{{ claimdata[1] }}" name="topicid">
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn"  data-dismiss="modal" style="background-color: #596e79">
+                            <span style="color: white">Close</span>
+                        </button>
+
+                        <div class="dropdown" id="choice2" name="choice2">
+
+                            <select required id="choice" class="form-control" name="choice">
+                                <option selected>Type</option>
+                                <option>Clarification</option>
+                                <option>Supporting Argument</option>
+                                <option>Counterargument</option>
+                            </select>
+
+
+                        </div>
+                        <button type="submit" class="btn" style="background-color: #596e79"><span style="color: white">Save Changes</span></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $('#myModal').on('shown.bs.modal', function () {
+            $('#myInput').trigger('focus')
+        })
+    </script>
+
+    <script src=" https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+    </body>
+{% endblock %}

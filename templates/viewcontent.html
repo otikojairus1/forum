@@ -1,0 +1,138 @@
+{% extends "index.html" %}
+{% block content %}
+    <body style="background-color: #383e56">
+
+    <div class="container-fluid">
+        <h1 class="display-1 jumbotron" style="text-align: center; background-color: #ea907a"><span style="color: #eedad1">Topic</span></h1>
+    </div>
+
+    <div class="container" style="background-color: #ea907a">
+        <div class="jumbotron" style="background-color: #ea907a">
+
+            <h1 style="color: #eedad1">{{ topicdata[3] }} <span
+                    style="font-size: 12px; color: #eedad1"> ◽ Posted by User: {{ topicdata[2] }} | Time: {{ topicdata[5] }}</span>
+            </h1>
+
+            <p class="lead" style="font-size: 30px; color: #eedad1 ">{{ topicdata[4] }}</p>
+            <hr class="my-4">
+            
+            <div class="row">
+                <div class="col-md-6 col-sm-12">
+                    <h4 style="color: #eedad1">Replies:
+                        <span style="color: #eedad1"><button style=" background-color: #596e79; float: right; margin-left: -40%;" type="button"
+                                      class="btn btn-sm"
+                                      data-toggle="modal" data-target="#reply"><span style="color: white">Reply</span>
+                    </button>
+
+                   </span>
+                    </h4>
+
+
+                    {% for reply in topicreply %}
+                        <div class="list-group-item list-group-item-dark">
+                            <h6>{{ reply[2] }} <span style="font-size: 12px;">at {{ reply[4] }}
+                                <span class="badge badge-secondary">{{ reply[5] }}</span>
+                            </span></h6>
+
+                            <p style="font-size: 14px;">{{ reply[3] }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <h4>Claims:
+                    <button onclick="window.location.href = '{{ url_for('claiminsert') }}';" value="{{ topicdata[0] }}"
+                            name="topicid" id="topicid"  class="btn btn-sm" style="background-color: #596e79;float: right">
+                        <span style="color: white">Claim</span>
+                    </button>
+                        </h4>
+
+
+                    {% for claim in claimdata %}
+
+                    <form  method="POST" action="{{ url_for('claimview') }}">
+                        <li class="list-group">
+
+                            <input type="hidden" value="{{ claim[1] }}" name="topicid"  >
+                            <input type="hidden" value="{{ claim[0] }}" name="claimid"  >
+                            <button type="submit" class ="list-group-item list-group-item-dark">
+
+                                    <h6 style="text-align: left;" >{{ claim[2] }} <span style="font-size: 12px;">at {{ claim[3] }}
+                                    <span class="badge badge-secondary">{{ claim[6] }}</span>
+                                </span></h6>
+                                <p style="font-size: 14px; text-align:left;">{{ claim[4] }}</p>
+                            
+                            </button>
+
+                        </li>
+                    </form>
+        
+                        
+                    {% endfor %}    
+                </div>
+
+
+            </div>
+
+            <div class="modal fade" tabindex="-1" id="reply" role="dialog" aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog" role="document">
+
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Reply</h5>
+                            <button type="button" class="close " style="background-color: #596e79" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form method="POST" action="{{ url_for('topicrpeply') }}">
+                            <div class="modal-body">
+
+                                <input type="text" class="form-control" name="reply"
+                                       placeholder="Enter your reply">
+                            </div>
+                            <input type="hidden" value="{{ topicdata[0] }}" name="topicid">
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn " style="background-color: #596e79" data-dismiss="modal"><span style="color: white">Close</span>
+                                </button>
+
+                                <div class="dropdown" id="choice2" name="choice2">
+
+                                    <select required id="choice" class="form-control" name="choice">
+                                        <option selected>Type</option>
+                                        <option>Clarification</option>
+                                        <option>Supporting Argument</option>
+                                        <option>Counterargument</option>
+                                    </select>
+
+
+                                </div>
+                                <button type="submit" class="btn " style="background-color: #596e79"><span style="color: white">Save Chagnes</span></button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                $('#myModal').on('shown.bs.modal', function () {
+                    $('#myInput').trigger('focus')
+                })
+            </script>
+
+
+        </div>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+    </body>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends "index.html" %}
+{% block content %}
+    <body style="background-color: #383e56">
+    <div class="container-fluid">
+        <h1 class="display-1 jumbotron" style="text-align: center; background-color: #ea907a"><span style="color: #eedad1">New Claim</span></h1>
+    </div>
+    <div class="container">
+        <br>
+        <form method="POST" action="{{ url_for('claiminsert') }}" >
+            <div class="dropdown">
+                <div class="dropdown">
+                    <select required id="choice" class="form-control" name="choice">
+                        <option selected>Select Type</option>
+                        <option>Equal</option>
+                        <option>Opposed</option>
+                    </select>
+                </div>
+                <br>
+            </div>
+            <br>
+
+            <input class="form-control form-control-lg" type="text" name="title" placeholder="Claim Title">
+            <br>
+
+            <textarea class="form-control" id="TextArea" rows="3" name="content" placeholder="Content"></textarea>
+            <br>
+            <div style="align-items: center">
+                <button type="submit" class="btn" style="background-color: #596e79"><span style="color: white">Submit</span></button>
+            </div>
+        </form>
+
+
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+    </body>
+{% endblock %}
